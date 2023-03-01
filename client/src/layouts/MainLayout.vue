@@ -14,24 +14,24 @@
   
         <nav class="flex items-center q-gutter-lg justify-center">
           <q-list class="flex justify-center">
-            <q-list-item
+            <p
               class="q-mr-lg main-layout__nav-item"
               @click="$router.push({ name: 'PostsList' })"
             >
               Postagens
-            </q-list-item>
-            <q-list-item
+            </p>
+            <p
               class="q-mr-lg main-layout__nav-item"
               @click="$router.push({ name: 'AuthorsList' })"
             >
               Autores
-            </q-list-item>
-            <q-list-item
+            </p>
+            <p
               class="q-mr-md main-layout__nav-item"
               @click="$router.push({ name: 'AboutPage' })"
             >
               Sobre
-            </q-list-item>
+            </p>
           </q-list>
 
           <q-input

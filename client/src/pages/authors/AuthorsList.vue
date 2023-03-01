@@ -1,19 +1,22 @@
 <template>
-  <div>Testando authors</div>
+  <div>Listagem de todos authors</div>
+  <pre>{{ authors }}</pre>
 </template>
 
 <script>
-import { mapActions } from 'pinia'
+import { mapActions, mapState } from 'pinia'
 import { useAuthorsStore } from '../../stores/modules/authors'
 
 export default {
+  computed: {
+    ...mapState(useAuthorsStore, ['authors'])
+  },
+
   created() {
-    this.teste()
+    this.fetchAuthors()
   },
   methods: {
-    ...mapActions(useAuthorsStore, {
-      teste: 'fetchAuthors'
-    })
+    ...mapActions(useAuthorsStore, ['fetchAuthors'])
   }
 }
 </script>
