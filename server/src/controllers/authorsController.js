@@ -7,9 +7,9 @@ const getAll = async (req, res) => {
 };
 
 const createAuthor = async (req, res) => {
-  const createdAuthor = await authorsModel.createAuthor(req.body);
+  await authorsModel.createAuthor(req.body);
 
-  return res.status(201).json(createdAuthor);
+  return res.status(201).json({ status: 201, message: 'Author created success!' });
 };
 
 const deleteAuthor = async (req, res) => {
