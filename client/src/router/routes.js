@@ -1,10 +1,22 @@
 
+import authors from './modules/authors'
+import posts from './modules/posts'
+import about from './modules/about'
+
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') }
+      { 
+        path: '',
+        component: () => import('pages/HomePage.vue'),
+        name: 'Root',
+      },
+
+      ...authors,
+      ...posts,
+      ...about
     ]
   },
 
@@ -12,7 +24,7 @@ const routes = [
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue')
+    component: () => import('src/pages/errors-page/ErrorNotFound.vue')
   }
 ]
 

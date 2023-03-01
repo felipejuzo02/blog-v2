@@ -1,39 +1,58 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-
-    <q-header elevated class="bg-primary text-white">
-      <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
+  <q-layout class="main-layout">
+    <q-header
+      elevated
+      class="bg-grey-1 text-black q-py-md"
+    >
+      <div class="container flex items-center justify-between">
+        <h2
+          class="text-h1 cursor-pointer"
+          @click="$router.push({ name: 'Root' })"
+        >
           Blog v2
-        </q-toolbar-title>
-      </q-toolbar>
+        </h2>
+  
+        <nav class="flex items-center q-gutter-lg justify-center">
+          <q-list class="flex justify-center">
+            <q-list-item
+              class="q-mr-lg main-layout__nav-item"
+              @click="$router.push({ name: 'PostsList' })"
+            >
+              Postagens
+            </q-list-item>
+            <q-list-item
+              class="q-mr-lg main-layout__nav-item"
+              @click="$router.push({ name: 'AuthorsList' })"
+            >
+              Autores
+            </q-list-item>
+            <q-list-item
+              class="q-mr-md main-layout__nav-item"
+              @click="$router.push({ name: 'AboutPage' })"
+            >
+              Sobre
+            </q-list-item>
+          </q-list>
+
+          <q-input
+            v-model="search"
+            type="text"
+            color="grey-3"
+            standout="bg-grey-3 text-grey-3"
+            dense
+            filled
+          >
+            <template #append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </nav>
+      </div>
     </q-header>
-
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
-      <q-list>
-        <q-item class="column" v-for="(item, index) in drawerContent" :key="index">
-          <q-item-label header>{{ item.title }}</q-item-label>
-
-          <q-item clickable v-ripple v-for="(option, optionIndex) in item.options" :key="optionIndex">
-            <q-item-section avatar>
-              <q-icon color="grey-7" :name="option.icon" />
-            </q-item-section>
-
-            <q-item-section>{{ option.title }}</q-item-section>
-          </q-item>
-        </q-item>
-      </q-list>
-    </q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
-
   </q-layout>
 </template>
 
@@ -41,34 +60,22 @@
 export default {
   data () {
     return {
-      leftDrawerOpen: false
+      search: ''
     }
   },
+}
+</script>
 
-  methods: {
-    toggleLeftDrawer () {
-      this.leftDrawerOpen = !this.leftDrawerOpen
-    }
-  },
+<style lang="scss">
+.main-layout {
+  &__nav-item {
+    cursor: pointer;
+    color: $grey-7;
+    font-size: 1.6rem;
 
-  computed: {
-    drawerContent () {
-      return [
-        {
-          title: 'Postagens',
-          options: [
-            { title: 'Postagens', icon: 'grade' },
-            { title: 'Categorias', icon: 'category' },
-          ]
-        },
-        {
-          title: 'Autores',
-          options: [
-            { title: 'Autores', icon: 'person' },
-          ]
-        }
-      ]
+    &:hover {
+      color: $primary;
     }
   }
 }
-</script>
+</style>
