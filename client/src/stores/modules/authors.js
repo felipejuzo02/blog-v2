@@ -25,6 +25,21 @@ export const useAuthorsStore = defineStore('authorsStore', {
         })
       } catch (error) {
         console.log('deu um erro')
+        throw error
+      }
+    },
+
+    async createAuthor(payload) {
+      try {
+        console.log(payload)
+        await axios.post('http://localhost:3333/authors', payload)
+
+        Notify.create({
+          message: 'Autor criado com sucesso!',
+          icon: 'done'
+        })
+      } catch {
+        throw error
       }
     }
   }

@@ -1,5 +1,8 @@
 <template>
-  <q-form @submit="onSubmit">
+  <q-form
+    class="app-form-generator"
+    @submit="onSubmit"
+  >
     <component
       :is="componentTag(field)"
       v-bind="attributes(field)"
@@ -8,8 +11,14 @@
       v-model="values[field.name]"
     />
 
-    <div class="row">
+    <div class="row justify-end q-mt-lg">
       <app-button
+        class="q-mr-md"
+        label="Cancelar"
+        variation="secondary"
+      />
+      <app-button
+        :loading="loadingButton"
         type="submit"
         label="Salvar"
       />
@@ -18,6 +27,9 @@
 </template>
 
 <script>
+import { mapActions } from 'pinia';
+import { useAuthorsStore } from '../stores/modules/authors'
+
 import AppInput from 'src/components/AppInput.vue';
 import AppSelect from 'src/components/AppSelect.vue';
 import AppButton from './AppButton.vue';
@@ -40,13 +52,24 @@ export default {
     errors: {
       type: Object,
       default: () => ({})
+    },
+
+    entity: {
+      type: String,
+      default: ''
+    },
+
+    mode: {
+      type: String,
+      default: 'create'
     }
   },
 
   data () {
     return {
       values: {},
-      errorsData: {}
+      errorsData: {},
+      loadingButton: false
     }
   },
 
@@ -56,12 +79,41 @@ export default {
         text: 'app-input',
         select: 'app-select'
       }
-    }
+    },
+
+    isEditMode () {
+      return this.mode === 'edit'
+    },
+
+    actions () {
+      return {
+        authors: {
+          edit: () => console.log('teste'),
+          create: () => this.createAuthor(this.values)
+        }
+      }
+    },
   },
 
   methods: {
-    onSubmit() {
-      console.log('this.values', this.values)
+    ...mapActions(useAuthorsStore, ['createAuthor']),
+
+    async onSubmit() {
+      try {
+        this.loadingButton = true
+
+        await this.handleActions()
+
+        this.$router.push({ name: 'AuthorsList' })
+      } catch (error){
+        console.log('erro', error)
+      } finally {
+        this.loadingButton = false
+      }
+    },
+
+    async handleActions () {
+      await this.actions[this.entity][this.mode]()
     },
 
     componentTag (field) {

@@ -2,6 +2,7 @@
   <q-btn
     v-bind="$attrs"
     class="app-button fit"
+    :class="appButtonClass"
     padding="13px"
     rounded
     size="14px"
@@ -20,7 +21,20 @@
 
 <script>
 export default {
-  name: 'AppButton'
+  name: 'AppButton',
+
+  props: {
+    variation: {
+      type: String,
+      default: 'primary'
+    }
+  },
+
+  computed: {
+    appButtonClass () {
+      return this.variation === 'secondary' && 'app-button__secondary'
+    }
+  }
 }
 </script>
 
@@ -37,6 +51,16 @@ export default {
   &:disabled {
     background-color: red;
     color: white;
+  }
+
+  &__secondary {
+    background-color: transparent;
+    color: $primary;
+    border: 1px solid $primary;
+
+    &:hover {
+      background-color: transparent;
+    }
   }
 }
 
