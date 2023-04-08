@@ -26,6 +26,20 @@ export const useAuthorsStore = defineStore('authorsStore', {
       }
     },
 
+    async editAuthor(id, payload) {
+      try {
+        console.log('bati aq')
+        await axios.put(`http://localhost:3333/authors/${id}`, payload)
+
+        Notify.create({
+          message: 'Autor editado com sucesso!',
+          icon: 'done'
+        })
+      } catch {
+        throw error
+      }
+    },
+
     async deleteAuthor({ id }) {
       try {
         await axios.delete(`http://localhost:3333/authors/${id}`)

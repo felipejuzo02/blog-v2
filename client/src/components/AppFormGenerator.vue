@@ -92,14 +92,14 @@ export default {
       return this.$route.params?.id
     },
 
-    actions () {
+    submitActions () {
       return {
         authors: {
-          edit: () => console.log('teste'),
+          edit: () => this.editAuthor(this.id, this.values),
           create: () => this.createAuthor(this.values)
         }
       }
-    },
+    }
   },
 
   async created () {
@@ -107,7 +107,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(useAuthorsStore, ['createAuthor', 'fetchAuthor']),
+    ...mapActions(useAuthorsStore, ['createAuthor', 'fetchAuthor', 'editAuthor']),
 
     async onSubmit() {
       try {
@@ -117,7 +117,7 @@ export default {
 
         this.$router.push({ name: 'AuthorsList' })
       } catch (error){
-        console.log('erro', error)
+        console.error('erro', error)
       } finally {
         this.loadingButton = false
       }
@@ -132,11 +132,11 @@ export default {
 
     setValues () {
       // TODO: deixar dinamico a partir da entity
-      this.values = Object.assign({}, this.author)
+      this.values = Object.assign({}, this['author'])
     },
 
     async handleActions () {
-      await this.actions[this.entity][this.mode]()
+      await this.submitActions[this.entity][this.mode]()
     },
 
     componentTag (field) {
