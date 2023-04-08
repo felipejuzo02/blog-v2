@@ -16,6 +16,7 @@
         class="q-mr-md"
         label="Cancelar"
         variation="secondary"
+        @click="$router.go(-1)"
       />
       <app-button
         :loading="loadingButton"

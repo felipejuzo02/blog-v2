@@ -5,7 +5,8 @@ import { Notify } from 'quasar'
 
 export const useAuthorsStore = defineStore('authorsStore', {
   state: () => ({
-    authors: []
+    authors: [],
+    author: {}
   }),
 
   actions: {
@@ -13,6 +14,16 @@ export const useAuthorsStore = defineStore('authorsStore', {
       const { data } = await axios.get('http://localhost:3333/authors')
       
       this.authors = data
+    },
+
+    async fetchAuthor ({ id }) {
+      try {
+        const { data } = await axios.get(`http://localhost:3333/authors/${id}`)
+
+        this.author = data
+      } catch {
+        throw error
+      }
     },
 
     async deleteAuthor({ id }) {

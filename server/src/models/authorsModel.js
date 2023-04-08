@@ -6,6 +6,15 @@ const getAll = async () => {
   return rows;
 };
 
+const fetchAuthor = async (id) => {
+  const { rows } = await connection.query(
+    'SELECT * FROM tb_authors WHERE id = $1',
+    [id]
+  );
+
+  return rows[0];
+};
+
 const createAuthor = async (author) => {
   const { name, email } = author;
 
@@ -41,6 +50,7 @@ const updateAuthor = async (id, author) => {
 
 module.exports = {
   getAll,
+  fetchAuthor,
   createAuthor,
   deleteAuthor,
   updateAuthor

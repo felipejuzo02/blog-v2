@@ -6,6 +6,14 @@ const getAll = async (req, res) => {
   return res.status(200).json(authors);
 };
 
+const fetchAuthor = async (req, res) => {
+  const { id } = req.params;
+
+  const author = await authorsModel.fetchAuthor(id);
+
+  return res.status(200).json(author);
+};
+
 const createAuthor = async (req, res) => {
   await authorsModel.createAuthor(req.body);
 
@@ -29,6 +37,7 @@ const updateAuthor = async (req, res) => {
 
 module.exports = {
   getAll,
+  fetchAuthor,
   createAuthor,
   deleteAuthor,
   updateAuthor
