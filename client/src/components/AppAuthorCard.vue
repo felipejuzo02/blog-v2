@@ -27,7 +27,7 @@
               v-close-popup
               clickable
             >
-              <q-item-section>
+              <q-item-section @click="$router.push({ name: 'AuthorsEdit', params: { id: content.id }})">
                 Editar autor
               </q-item-section>
             </q-item>

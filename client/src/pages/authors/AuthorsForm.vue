@@ -8,6 +8,7 @@
     <div>
       <app-form-generator
         :fields="fields"
+        :mode="mode"
         entity="authors"
       />
     </div>
@@ -32,6 +33,10 @@ export default {
         { label: 'Nome do autor', name: 'name', type: 'text' },
         { label: 'E-mail', name: 'email', type: 'text' }
       ]
+    },
+
+    mode () {
+      return this.isEditMode ? 'edit' : 'create'
     },
 
     isEditMode () {

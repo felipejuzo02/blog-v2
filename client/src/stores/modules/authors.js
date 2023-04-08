@@ -16,7 +16,7 @@ export const useAuthorsStore = defineStore('authorsStore', {
       this.authors = data
     },
 
-    async fetchAuthor ({ id }) {
+    async fetchAuthor (id) {
       try {
         const { data } = await axios.get(`http://localhost:3333/authors/${id}`)
 

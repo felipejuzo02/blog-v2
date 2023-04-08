@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapActions } from 'pinia';
+import { mapActions, mapState } from 'pinia';
 import { useAuthorsStore } from '../stores/modules/authors'
 
 import AppInput from 'src/components/AppInput.vue';
@@ -75,6 +75,8 @@ export default {
   },
 
   computed: {
+    ...mapState(useAuthorsStore, ['author']),
+
     componentType () {
       return {
         text: 'app-input',
@@ -84,6 +86,10 @@ export default {
 
     isEditMode () {
       return this.mode === 'edit'
+    },
+
+    id () {
+      return this.$route.params?.id
     },
 
     actions () {
@@ -96,8 +102,12 @@ export default {
     },
   },
 
+  async created () {
+    await this.fetchEntity()
+  },
+
   methods: {
-    ...mapActions(useAuthorsStore, ['createAuthor']),
+    ...mapActions(useAuthorsStore, ['createAuthor', 'fetchAuthor']),
 
     async onSubmit() {
       try {
@@ -111,6 +121,18 @@ export default {
       } finally {
         this.loadingButton = false
       }
+    },
+
+    async fetchEntity () {
+      if (!this.isEditMode) return
+
+      await this.fetchAuthor(this.id)
+      this.setValues()
+    },
+
+    setValues () {
+      // TODO: deixar dinamico a partir da entity
+      this.values = Object.assign({}, this.author)
     },
 
     async handleActions () {
