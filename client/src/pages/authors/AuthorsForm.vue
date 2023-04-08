@@ -1,11 +1,10 @@
 <template>
   <main class="page-authors-form container q-py-xl">
-    <div class="row items-center justify-between q-mb-md">
-      <h2 class="text-h2">
-        Criar autor
-      </h2>
-    </div>
-    
+    <app-header-pages
+      :title="title"
+      :breadcrumbs="breadcrumbs"
+    />
+
     <div>
       <app-form-generator
         :fields="fields"
@@ -16,13 +15,15 @@
 </template>
 
 <script>
+import AppHeaderPages from 'src/components/AppHeaderPages.vue';
 import AppFormGenerator from 'src/components/AppFormGenerator.vue'
 
 export default {
   name: 'AuthorsForm',
 
   components: {
-    AppFormGenerator
+    AppFormGenerator,
+    AppHeaderPages,
   },
 
   computed: {
@@ -30,6 +31,22 @@ export default {
       return [
         { label: 'Nome do autor', name: 'name', type: 'text' },
         { label: 'E-mail', name: 'email', type: 'text' }
+      ]
+    },
+
+    isEditMode () {
+      return this.$route.params?.id
+    },
+
+    title () {
+      return this.isEditMode ? 'Editar autor' : 'Criar autor'
+    },
+
+    breadcrumbs () {
+      return [
+        { label: 'Home', route: 'Root' },
+        { label: 'Autores', route: 'AuthorsList' },
+        { label: this.title },
       ]
     }
   }

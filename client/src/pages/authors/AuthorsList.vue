@@ -1,15 +1,16 @@
 <template>
   <main class="page-authors-list container q-py-xl">
-    <div class="row items-center justify-between q-mb-md">
-      <h2 class="text-h2">
-        Autores
-      </h2>
-
-      <app-button
-        label="Novo autor"
-        @click="$router.push({ name: 'AuthorsCreate'})"
-      />
-    </div>
+    <app-header-pages
+      title="Autores"
+      :breadcrumbs="breadcrumbs"
+    >
+      <template #actions>
+        <app-button
+          label="Novo autor"
+          @click="$router.push({ name: 'AuthorsCreate'})"
+        />
+      </template>
+    </app-header-pages>
     
     <div class="page-authors-list__list column q-gutter-xs">
       <app-author-card
@@ -27,15 +28,24 @@ import { useAuthorsStore } from '../../stores/modules/authors'
 
 import AppAuthorCard from 'src/components/AppAuthorCard.vue'
 import AppButton from 'src/components/AppButton.vue'
+import AppHeaderPages from 'src/components/AppHeaderPages.vue'
 
 export default {
   components: {
     AppAuthorCard,
-    AppButton
+    AppButton,
+    AppHeaderPages
   },
 
   computed: {
-    ...mapState(useAuthorsStore, ['authors'])
+    ...mapState(useAuthorsStore, ['authors']),
+
+    breadcrumbs () {
+      return [
+        { label: 'Home', route: 'Root' },
+        { label: 'Autores' },
+      ]
+    }
   },
 
   created() {
