@@ -117,7 +117,9 @@ export default {
 
         this.$router.push({ name: 'AuthorsList' })
       } catch (error){
-        console.error('erro', error)
+        const { response: { data }} = error
+
+        this.errorsData = data
       } finally {
         this.loadingButton = false
       }
@@ -147,10 +149,12 @@ export default {
 
     attributes (field) {
       const { label, name, type } = field
-
+   
       return {
         label,
         name,
+        error: !!this.errorsData[name],
+        errorMessage: this.errorsData[name],
         options: type === 'select' && field.options
       }
     }

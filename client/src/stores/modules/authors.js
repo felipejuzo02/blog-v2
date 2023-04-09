@@ -63,7 +63,7 @@ export const useAuthorsStore = defineStore('authorsStore', {
           message: 'Autor criado com sucesso!',
           icon: 'done'
         })
-      } catch {
+      } catch (error) {
         throw error
       }
     }
