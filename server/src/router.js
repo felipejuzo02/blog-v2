@@ -9,13 +9,11 @@ router.get('/authors', authorsController.getAll);
 router.get('/authors/:id', authorsController.fetchAuthor);
 router.delete('/authors/:id', authorsController.deleteAuthor);
 router.post('/authors', 
-  authorsMiddleware.validateFieldName,
-  authorsMiddleware.validateFieldEmail,
+  authorsMiddleware.validateFields,
   authorsController.createAuthor
 );
 router.put('/authors/:id', 
-  authorsMiddleware.validateFieldName,
-  authorsMiddleware.validateFieldEmail,
+  authorsMiddleware.validateFields,
   authorsController.updateAuthor
 );
 

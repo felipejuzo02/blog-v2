@@ -1,24 +1,21 @@
-const validateFieldName = (req, res, next) => {
+
+const validateFields = (req, res, next) => {
+  const requiredFields = ['name', 'email'];
+  const error = {};
+
   const { body } = req;
 
-  if (body.name === undefined || body.name === '') {
-    return res.status(400).json({ message: 'The field name is required' });
-  }
-
-  next();
-};
-
-const validateFieldEmail = (req, res, next) => {
-  const { body } = req;
-
-  if (body.email === undefined || body.email === '') {
-    return res.status(400).json({ message: 'The field email is required' });
-  }
-
-  next();
+  requiredFields.forEach(field => {
+    if (body[field] === undefined || body[field] === '') {
+      error[field] = 'The field is required'; 
+    }
+  });
+  
+  return Object.keys(error).length === 0
+    ? next()
+    : res.status(400).json(error);
 };
 
 module.exports = {
-  validateFieldName,
-  validateFieldEmail
+  validateFields
 };
