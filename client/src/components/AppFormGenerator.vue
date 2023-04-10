@@ -10,6 +10,12 @@
       :key="index"
       v-model="values[field.name]"
     />
+    <div
+      v-if="isEditMode"
+      class="text-grey-7 row justify-end"
+    >
+      Criado em {{ getCreatedAt }}.
+    </div>
 
     <div class="row justify-end q-mt-lg">
       <app-button
@@ -82,6 +88,13 @@ export default {
         text: 'app-input',
         select: 'app-select'
       }
+    },
+
+    getCreatedAt () {
+      const formatedDate = new Date(this.values.created_at)
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+      return formatedDate.toLocaleDateString('pt-BR', options)
     },
 
     isEditMode () {

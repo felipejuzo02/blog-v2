@@ -28,7 +28,6 @@ export const useAuthorsStore = defineStore('authorsStore', {
 
     async editAuthor(id, payload) {
       try {
-        console.log('bati aq')
         await axios.put(`http://localhost:3333/authors/${id}`, payload)
 
         Notify.create({
@@ -56,7 +55,6 @@ export const useAuthorsStore = defineStore('authorsStore', {
 
     async createAuthor(payload) {
       try {
-        console.log(payload)
         await axios.post('http://localhost:3333/authors', payload)
 
         Notify.create({
