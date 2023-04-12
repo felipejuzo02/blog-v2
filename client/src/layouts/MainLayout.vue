@@ -28,7 +28,7 @@
             </p>
             <p
               class="q-mr-md main-layout__nav-item"
-              @click="$router.push({ name: 'AboutPage' })"
+              @click="$router.push({ name: 'AboutSingle' })"
             >
               Sobre
             </p>

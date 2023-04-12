@@ -11,14 +11,14 @@ export const useAuthorsStore = defineStore('authorsStore', {
 
   actions: {
     async fetchAuthors () {
-      const { data } = await axios.get('http://localhost:3333/authors')
+      const { data } = await axios.get('/authors')
       
       this.authors = data
     },
 
     async fetchAuthor (id) {
       try {
-        const { data } = await axios.get(`http://localhost:3333/authors/${id}`)
+        const { data } = await axios.get(`/authors/${id}`)
 
         this.author = data
       } catch {
@@ -28,7 +28,7 @@ export const useAuthorsStore = defineStore('authorsStore', {
 
     async editAuthor(id, payload) {
       try {
-        await axios.put(`http://localhost:3333/authors/${id}`, payload)
+        await axios.put(`/authors/${id}`, payload)
 
         Notify.create({
           message: 'Autor editado com sucesso!',
@@ -41,21 +41,20 @@ export const useAuthorsStore = defineStore('authorsStore', {
 
     async deleteAuthor({ id }) {
       try {
-        await axios.delete(`http://localhost:3333/authors/${id}`)
+        await axios.delete(`/authors/${id}`)
 
         Notify.create({
           message: 'Autor deletado com sucesso!',
           icon: 'done'
         })
       } catch (error) {
-        console.log('deu um erro')
         throw error
       }
     },
 
     async createAuthor(payload) {
       try {
-        await axios.post('http://localhost:3333/authors', payload)
+        await axios.post('/authors', payload)
 
         Notify.create({
           message: 'Autor criado com sucesso!',
