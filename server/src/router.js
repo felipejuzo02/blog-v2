@@ -5,7 +5,7 @@ const authorsMiddleware = require('./middlewares/authorsMiddleware');
 
 const router = express.Router();
 
-router.get('/authors', authorsController.getAll);
+router.get('/authors', authorsController.fetchAll);
 router.get('/authors/:id', authorsController.fetchAuthor);
 router.delete('/authors/:id', authorsController.deleteAuthor);
 router.post('/authors', 

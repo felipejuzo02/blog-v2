@@ -1,6 +1,6 @@
 const connection = require('./connection');
 
-const getAll = async () => {
+const fetchAll = async () => {
   const { rows } = await connection.query('SELECT * FROM tb_authors ORDER BY id');
 
   return rows;
@@ -49,7 +49,7 @@ const updateAuthor = async (id, author) => {
 };
 
 module.exports = {
-  getAll,
+  fetchAll,
   fetchAuthor,
   createAuthor,
   deleteAuthor,

@@ -1,7 +1,7 @@
 const authorsModel = require('../models/authorsModel');
 
-const getAll = async (req, res) => {
-  const authors = await authorsModel.getAll();
+const fetchAll = async (req, res) => {
+  const authors = await authorsModel.fetchAll();
 
   return res.status(200).json(authors);
 };
@@ -36,7 +36,7 @@ const updateAuthor = async (req, res) => {
 };
 
 module.exports = {
-  getAll,
+  fetchAll,
   fetchAuthor,
   createAuthor,
   deleteAuthor,
