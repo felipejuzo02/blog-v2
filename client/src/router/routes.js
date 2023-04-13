@@ -2,6 +2,7 @@
 import authors from './modules/authors'
 import posts from './modules/posts'
 import about from './modules/about'
+import categories from './modules/categories'
 
 const routes = [
   {
@@ -16,7 +17,8 @@ const routes = [
 
       ...authors,
       ...posts,
-      ...about
+      ...about,
+      ...categories
     ]
   },
 

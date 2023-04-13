@@ -27,6 +27,12 @@
               Autores
             </p>
             <p
+              class="q-mr-lg main-layout__nav-item"
+              @click="$router.push({ name: 'CategoriesList' })"
+            >
+              Categorias
+            </p>
+            <p
               class="q-mr-md main-layout__nav-item"
               @click="$router.push({ name: 'AboutSingle' })"
             >
