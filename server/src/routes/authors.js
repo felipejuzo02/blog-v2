@@ -1,7 +1,7 @@
 const express = require('express');
 
-const authorsController = require('./controllers/authorsController');
-const authorsMiddleware = require('./middlewares/authorsMiddleware');
+const authorsController = require('../controllers/authorsController');
+const authorsMiddleware = require('../middlewares/authorsMiddleware');
 
 const router = express.Router();
 
