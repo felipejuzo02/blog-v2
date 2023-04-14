@@ -1,7 +1,7 @@
 <template>
   <q-btn
     v-bind="$attrs"
-    class="app-button fit"
+    class="app-button fit full-width"
     :class="appButtonClass"
     padding="13px"
     rounded
