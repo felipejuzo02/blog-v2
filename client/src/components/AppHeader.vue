@@ -25,31 +25,21 @@
 
         <div class="separator q-mx-md" />
 
-        <div class="app-header__actions">
-          <q-btn
-            flat
-            color="grey-7"
-            icon="login"
-            label="login"
-            class="q-mr-sm"
-          />
-          <q-btn
-            text-color="white"
-            color="primary"
-            label="criar conta"
-            unelevated
-            rounded=""
-          />
-        </div>
+        <app-header-actions />
       </nav>
     </div>
   </q-header>
 </template>
 
 <script>
+import AppHeaderActions from './AppHeaderActions.vue';
 
 export default {
   name: 'AppHeader',
+
+  components: {
+    AppHeaderActions
+  },
 
   computed: {
     menuItems () {
