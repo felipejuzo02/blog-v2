@@ -36,6 +36,7 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import { useAuthorsStore } from '../stores/modules/authors'
+import { useCategoriesStore } from '../stores/modules/categories'
 
 import AppInput from 'src/components/AppInput.vue';
 import AppSelect from 'src/components/AppSelect.vue';
@@ -110,8 +111,18 @@ export default {
         authors: {
           edit: () => this.editAuthor(this.id, this.values),
           create: () => this.createAuthor(this.values)
+        },
+
+        categories: {
+          create: () => this.createCategory(this.values)
         }
       }
+    },
+
+    routeToRedirect () {
+      const formattedEntity = this.entity[0].toUpperCase() + this.entity.substring(1)
+
+      return `${formattedEntity}List`
     }
   },
 
@@ -121,14 +132,15 @@ export default {
 
   methods: {
     ...mapActions(useAuthorsStore, ['createAuthor', 'fetchAuthor', 'editAuthor']),
+    ...mapActions(useCategoriesStore, ['createCategory']),
 
     async onSubmit() {
       try {
         this.loadingButton = true
 
         await this.handleActions()
-
-        this.$router.push({ name: 'AuthorsList' })
+        
+        this.$router.push({ name: this.routeToRedirect })
       } catch (error){
         const { response: { data }} = error
 

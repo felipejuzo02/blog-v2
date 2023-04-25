@@ -13,7 +13,7 @@
     </app-header-pages>
 
     <app-table-generator
-      :rows="rows"
+      :rows="categoriesList"
       :columns="columns"
     />
   </main>
@@ -35,6 +35,12 @@ export default {
     AppTableGenerator
   },
 
+  data () {
+    return {
+      categoriesList: []
+    }
+  },
+
   computed: {
     ...mapState(useCategoriesStore, ['categories']),
 
@@ -46,7 +52,6 @@ export default {
     },
 
     columns () {
-      console.log('this.', this.categories)
       return [
         {
           name: 'name',
@@ -67,25 +72,22 @@ export default {
           align: 'left'
         },
       ]
-    },
-
-    rows () {
-      return [
-        {
-          name: 'Categoria 1',
-          description: 'Descrição categoria 1',
-          created_at: 'Criado em ...'
-        },
-      ]
     }
   },
 
-  created() {
-    this.fetchAuthors()
+  async created() {
+    await this.fetchCategories()
+
+    this.setData()
+    
   },
 
   methods: {
-    ...mapActions(useCategoriesStore, ['fetchAuthors'])
+    ...mapActions(useCategoriesStore, ['fetchCategories']),
+
+    setData() {
+      this.categoriesList = [...this.categories]
+    }
   }
 }
 </script>

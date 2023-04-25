@@ -12,13 +12,10 @@
       </template>
     </app-header-pages>
     
-    <div class="page-authors-list__list column q-gutter-xs">
-      <app-author-card
-        v-for="(author, index) in authors"
-        :key="index"
-        :content="author"
-      />
-    </div>
+    <app-table-generator
+      :rows="authorsList"
+      :columns="columns"
+    />
   </main>
 </template>
 
@@ -26,15 +23,21 @@
 import { mapActions, mapState } from 'pinia'
 import { useAuthorsStore } from '../../stores/modules/authors'
 
-import AppAuthorCard from 'src/components/AppAuthorCard.vue'
 import AppButton from 'src/components/AppButton.vue'
 import AppHeaderPages from 'src/components/AppHeaderPages.vue'
+import AppTableGenerator from 'src/components/AppTableGenerator.vue'
 
 export default {
   components: {
-    AppAuthorCard,
     AppButton,
-    AppHeaderPages
+    AppHeaderPages,
+    AppTableGenerator
+  },
+
+  data () {
+    return {
+      authorsList: []
+    }
   },
 
   computed: {
@@ -45,15 +48,38 @@ export default {
         { label: 'Home', route: 'Root' },
         { label: 'Autores' },
       ]
+    },
+
+    columns () {
+      return [
+        {
+          name: 'name',
+          label: 'Autor',
+          field: 'name',
+          align: 'left'
+        },
+        {
+          name: 'email',
+          label: 'E-mail',
+          field: 'email',
+          align: 'left'
+        },
+      ]
     }
   },
 
-  created() {
-    this.fetchAuthors()
+  async created() {
+    await this.fetchAuthors()
+
+    this.setData()
   },
 
   methods: {
-    ...mapActions(useAuthorsStore, ['fetchAuthors'])
+    ...mapActions(useAuthorsStore, ['fetchAuthors']),
+
+    setData () {
+      this.authorsList = [...this.authors]
+    }
   }
 }
 </script>
