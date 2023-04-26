@@ -4,9 +4,18 @@ import posts from './modules/posts'
 import about from './modules/about'
 import categories from './modules/categories'
 
+import authentication from './modules/authentication'
+
 const routes = [
   {
-    path: '/',
+    path: '/authentication',
+    component: () => import('layouts/BlankLayout.vue'),
+    children: [
+      ...authentication
+    ]
+  },
+  {
+    path: '',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { 
@@ -18,7 +27,7 @@ const routes = [
       ...authors,
       ...posts,
       ...about,
-      ...categories
+      ...categories,
     ]
   },
 

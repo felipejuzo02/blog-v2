@@ -7,6 +7,7 @@
         icon="login"
         label="login"
         class="q-mr-sm"
+        @click="$router.push({ name: 'Authentication' })"
       />
       <q-btn
         text-color="white"
@@ -79,7 +80,7 @@ export default {
 
   data () {
     return {
-      userLogged: true
+      userLogged: false
     }
   },
 

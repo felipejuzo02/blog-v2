@@ -40,7 +40,8 @@ export default {
 
 <style lang="scss">
 .app-button {
-  max-width: 200px;
+  max-width: 280px;
+  max-height: 50px;
   background-color: $primary;
   color: white;
 
