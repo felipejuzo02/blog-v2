@@ -15,6 +15,7 @@
         label="criar conta"
         unelevated
         rounded
+        @click="$router.push({ name: 'Authentication', query: { createAccount: true } })"
       />
     </div>
 

@@ -107,7 +107,10 @@
             />
 
             <p class="page-signin__forgot q-mt-lg">
-              Ao criar sua conta, você concorda com os <a href="#">Termos e Políticas de Privacidade.</a>
+              Ao criar sua conta, você concorda com os <a
+                class="cursor-pointer text-primary"
+                @click="openTermsModal"
+              >Termos e Políticas de Privacidade.</a>
             </p>
           </div>
         </form>
@@ -150,27 +153,61 @@
         </q-carousel> -->
       </div>
     </div>
+
+    <app-dialog
+      v-model="termsModel"
+      :content="dialogContent"
+    >
+      <template #default>
+        <div class="column full-width items-center">
+          <app-terms-content />
+        </div>
+      </template>
+    </app-dialog>
   </div>
 </template>
 
 <script>
 import AppInput from 'src/components/AppInput.vue';
 import AppButton from 'src/components/AppButton.vue';
+import AppDialog from 'src/components/AppDialog.vue';
+import AppTermsContent from 'src/components/AppTermsContent.vue';
 
 export default {
   name: 'SignIn',
 
   components: {
     AppInput,
-    AppButton
+    AppButton,
+    AppDialog,
+    AppTermsContent
   },
 
   data () {
     return {
       slide: 'style',
       signUpValues: {},
-      signInValues: {}
+      signInValues: {},
+      termsModel: false
     }
+  },
+
+  computed: {
+    dialogContent () {
+      return {
+        title: 'Termos e políticas de privacidade'
+      }
+    },
+
+    isSignUpMode () {
+      return this.$route.query?.createAccount
+    }
+  },
+
+  mounted () {
+    if (!this.isSignUpMode) return
+
+    this.toggleModeClass()
   },
 
   methods: {
@@ -180,6 +217,10 @@ export default {
       this.resetAllValues()
 
       signinPage.classList.toggle('sign-up-mode')
+    },
+
+    openTermsModal () {
+      this.termsModel = true
     },
 
     resetAllValues () {
