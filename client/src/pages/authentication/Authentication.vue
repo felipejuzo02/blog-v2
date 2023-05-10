@@ -37,12 +37,17 @@
             <app-input
               v-model="signInValues.email"
               label="E-mail"
+              v-bind="handleErrors(!!signInErrors.email, signInErrors.email)"
+              debounce="800"
+              @update:model-value="onUpdateEmailSignIn"
             />
             <app-input
               v-model="signInValues.password"
               label="Senha"
+              v-bind="handleErrors(!!signInErrors.password, signInErrors.password)"
             />
             <app-button
+              class="q-mt-md"
               label="Entrar"
               @click="onSignIn"
             />
@@ -117,44 +122,85 @@
       </div>
 
       <div class="page-signin__carousel">
-        <!-- <q-carousel
+        <q-carousel
           v-model="slide"
+          transition-prev="scale"
+          transition-next="scale"
           swipeable
           animated
           navigation
-          height="100%"
-          navigation-position="bottom"
-          class="bg-purple text-white rounded-borders"
+          padding
+          class="full-height text-white"
         >
+          <template #navigation-icon="{ active, btnProps, onClick }">
+            <div class="q-my-md">
+              <q-btn
+                v-if="active"
+                size="xs"
+                :icon="btnProps.icon"
+                color="grey-10"
+                flat
+                round
+                dense
+                @click="onClick"
+              />
+
+              <q-btn
+                v-else
+                size="xs"
+                :icon="btnProps.icon"
+                color="grey-8"
+                flat
+                round
+                dense
+                @click="onClick"
+              />
+            </div>
+          </template>
+
           <q-carousel-slide
             name="style"
-            class="column no-wrap flex-center"
+            class="column no-wrap flex-center justify-between"
           >
-            <q-icon
-              name="style"
-              size="56px"
+            <q-img
+              class="page-signin__carousel-image"
+              src="../../assets/image1.png"
             />
-            <div class="q-mt-md text-center">
-              teste
+            <div class="page-signin__carousel-text q-mt-md text-center">
+              Postagens todas as semanas
             </div>
           </q-carousel-slide>
           <q-carousel-slide
-            name="tv"
+            name="stayle"
             class="column no-wrap flex-center"
           >
-            <q-icon
-              name="live_tv"
-              size="56px"
+            <q-img
+              class="page-signin__carousel-image"
+              src="../../assets/image2.png"
             />
-            <div class="q-mt-md text-center">
-              teste
+            <div class="page-signin__carousel-text q-mt-md text-center">
+              Postagens todas as semanas
             </div>
           </q-carousel-slide>
-        </q-carousel> -->
+          <q-carousel-slide
+            name="styldse"
+            class="column no-wrap flex-center"
+          >
+            <q-img
+              class="page-signin__carousel-image"
+              src="../../assets/image3.png"
+            />
+            
+            <div class="page-signin__carousel-text q-mt-md text-center">
+              Postagens todas as semanas
+            </div>
+          </q-carousel-slide>
+        </q-carousel>
       </div>
     </div>
 
     <app-dialog
+      ref="dialog"
       v-model="termsModel"
       :content="dialogContent"
     >
@@ -162,6 +208,19 @@
         <div class="column full-width items-center">
           <app-terms-content />
         </div>
+      </template>
+
+      <template #actions>
+        <q-card-actions class="column full-width items-center q-gutter-md q-my-md">
+          <q-btn
+            outline
+            rounded
+            color="primary"
+            label="Entendi"
+            no-caps
+            @click="$refs.dialog.hide()"
+          />
+        </q-card-actions>
       </template>
     </app-dialog>
   </div>
@@ -172,6 +231,8 @@ import AppInput from 'src/components/AppInput.vue';
 import AppButton from 'src/components/AppButton.vue';
 import AppDialog from 'src/components/AppDialog.vue';
 import AppTermsContent from 'src/components/AppTermsContent.vue';
+
+import { handleErrors, validateEmail } from '../../helpers/index';
 
 export default {
   name: 'SignIn',
@@ -188,6 +249,10 @@ export default {
       slide: 'style',
       signUpValues: {},
       signInValues: {},
+      signInErrors: {
+        password: '',
+        email: ''
+      },
       termsModel: false
     }
   },
@@ -197,6 +262,10 @@ export default {
       return {
         title: 'Termos e políticas de privacidade'
       }
+    },
+
+    isInvalidEmail () {
+      return this.signInValues.email === 'teste'
     },
 
     isSignUpMode () {
@@ -211,6 +280,8 @@ export default {
   },
 
   methods: {
+    handleErrors,
+
     toggleModeClass () {
       const signinPage = document.querySelector('.page-signin')
 
@@ -228,11 +299,19 @@ export default {
       this.signUpValues = {}
     },
 
+    onUpdateEmailSignIn () {
+      validateEmail(this.signInValues.email)
+        ? this.signInErrors.email = ''
+        : this.signInErrors.email = 'invalidEmail'
+    },
+
     onSignUp () {
       console.log(this.signUpValues)
     },
 
     onSignIn () {
+      this.signInErrors.password = 'O e-mail ou senha não conferem!'
+
       console.log(this.signInValues)
     }
   }
@@ -314,8 +393,34 @@ export default {
     left: 45%;
     top: 0;
     background-color: #b3baff;
-    border-radius: 2rem;
+    border-radius: 3.3rem;
     transition: .8s ease-in-out;
+
+    & .q-carousel {
+      background-color: #c4c9ff;
+      border-radius: 3.3rem;
+    }
+  }
+
+  &__carousel-text {
+    color: $dark;
+    font-size: 2rem;
+    font-weight: 800;
+    position: absolute;
+    bottom: 80px;
+  }
+
+  &__carousel-image {
+    width: 100%;
+  }
+
+  &__carousel-navigation {
+    &--active {
+      height: 1.4rem;
+      width: 3.2rem;
+      background-color: $grey-8;
+      border-radius: 1rem;
+    }
   }
 
   &__heading  {

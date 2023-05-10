@@ -8,7 +8,7 @@
 
 <style lang="scss">
 .blank-layout {
-  background-color: rgb(144, 151, 252);
+  background-color: #9097fc;
   width: 100%;
   min-height: 100vh;
   overflow: hidden;

@@ -17,3 +17,23 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px $grey-3; 
+  border-radius: 14px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $primary;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $secondary;
+}
+</style>
